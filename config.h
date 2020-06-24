@@ -12,10 +12,10 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 // static const char *fonts[]          = { "Ubuntu:size=10", "ubuntu:pixelsize=10:antialias=true:autohint=true"  };
-static const char *fonts[]          = { "Ubuntu Mono:size=12","Ubuntu Mono:size=8:antialias=true" };
+static const char *fonts[]          = { "UbuntuMono:size=14","UbuntuMono:size=8:antialias=true" };
 //
-static char dmenufont[]       = "-*-Ubuntu-r-*-*-16-*-*-*-*-*-*-*";
-//"Ubuntu:size=8";
+static char dmenufont[]       ="UbuntuMono:size=13"; 
+//"-*-Ubuntu-r-*-*-16-*-*-*-*-*-*-*";
 
 static const unsigned int transparency = 1;
 
