@@ -288,6 +288,9 @@ static Client *swallowingclient(Window w);
 static Client *termforwin(const Client *c);
 static pid_t winpid(Window w);
 
+static void alt_tab(const Arg *arg);
+static void start_alt_tab(const Arg *arg);
+
 
 /* variables */
 static const char broken[] = "broken";
@@ -650,18 +653,42 @@ clientmessage(XEvent *e)
 {
 	XClientMessageEvent *cme = &e->xclient;
 	Client *c = wintoclient(cme->window);
-
+	unsigned int i;
+	
+	/*
 	if (!c)
 		return;
 	if (cme->message_type == netatom[NetWMState]) {
 		if (cme->data.l[1] == netatom[NetWMFullscreen]
 		|| cme->data.l[2] == netatom[NetWMFullscreen])
-			setfullscreen(c, (cme->data.l[0] == 1 /* _NET_WM_STATE_ADD    */
-				|| (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ && !c->isfullscreen)));
+			setfullscreen(c, (cme->data.l[0] == 1 
+				|| (cme->data.l[0] == 2  && !c->isfullscreen)));
 	} else if (cme->message_type == netatom[NetActiveWindow]) {
 		if (c != selmon->sel && !c->isurgent)
 			seturgent(c, 1);
 	}
+	*/
+
+	
+	if (!c)
+ 		return;
+
+ 	if (cme->message_type == netatom[NetWMState]) {
+		if (cme->data.l[1] == netatom[NetWMFullscreen]
+		|| cme->data.l[2] == netatom[NetWMFullscreen])
+ 			setfullscreen(c, (cme->data.l[0] == 1 /* _NET_WM_STATE_ADD    */
+ 				|| (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ && !c->isfullscreen)));
+ 	} else if (cme->message_type == netatom[NetActiveWindow]) {
+		for (i = 0; i < LENGTH(tags) && !((1 << i) & c->tags); i++);
+		if (i < LENGTH(tags)) {
+			const Arg a = {.ui = 1 << i};
+			selmon = c->mon;
+			view(&a);
+			focus(c);
+			restack(selmon);
+		}
+ 	}
+	
 }
 
 void
@@ -1188,13 +1215,16 @@ loadxrdb()
     if (resm != NULL) {
       xrdb = XrmGetStringDatabase(resm);
 
-      if (xrdb != NULL) {
-        XRDB_LOAD_COLOR("dwm.color0", normbordercolor);
-        XRDB_LOAD_COLOR("dwm.color8", selbordercolor);
-        XRDB_LOAD_COLOR("dwm.color0", normbgcolor);
-        XRDB_LOAD_COLOR("dwm.color4", normfgcolor);
-        XRDB_LOAD_COLOR("dwm.color0", selfgcolor);
-        XRDB_LOAD_COLOR("dwm.color4", selbgcolor);
+      if (xrdb != NULL) 
+      {
+      	/*
+        XRDB_LOAD_COLOR("dwm.normbordercolor", normbordercolor);
+        XRDB_LOAD_COLOR("dwm.selbordercolor", selbordercolor);
+        XRDB_LOAD_COLOR("dwm.normbgcolor", normbgcolor);
+        XRDB_LOAD_COLOR("dwm.normfgcolor", normfgcolor);
+        XRDB_LOAD_COLOR("dwm.selfgcolor", selfgcolor);
+        XRDB_LOAD_COLOR("dwm.selbgcolor", selbgcolor);
+        */
       }
     }
   }
@@ -2584,4 +2614,48 @@ main(int argc, char *argv[])
 	cleanup();
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
+}
+
+
+/* this implements <alt-Tab> for dwm, put it in config.h  */
+
+static int alt_tab_count = 0;
+
+/* focus and restack a client */
+static void focus_restack(Client *c)
+   { if (c) { focus(c); restack(selmon); } }
+
+void start_alt_tab(const Arg *arg)
+   { alt_tab_count = 0; }
+
+static Client *next_visible(Client *c)
+{
+   for(/* DO_NOTHING */; c && !ISVISIBLE(c); c=c->snext);
+   return c;
+}
+
+static int count_visible(void)
+{
+   int count = 0;
+   for (Client *c=next_visible(selmon->stack); c; c = next_visible(c->snext))
+      count += 1;
+   return count;
+}
+
+static Client *get_nth_client(int n)
+{
+   Client *c;
+   for (c=next_visible(selmon->stack); c && n--; c = next_visible(c->snext));
+   return c;
+}
+
+ void alt_tab(const Arg *arg)
+{
+   // put all of the windows back in their original focus/stack position */
+   for (int i=0; i<alt_tab_count; i+=1)
+      focus_restack(get_nth_client(alt_tab_count));
+
+   // focus and restack the nth window */
+   alt_tab_count = (alt_tab_count + 1) % count_visible();
+   focus_restack(get_nth_client(alt_tab_count));
 }
