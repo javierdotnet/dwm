@@ -891,6 +891,7 @@ drawbar(Monitor *m)
 		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
 	}
 
+
 	for (c = m->clients; c; c = c->next) {
 		occ |= c->tags == 255 ? 0 : c->tags;
 		if (c->isurgent)
@@ -987,7 +988,7 @@ focus(Client *c)
 	selmon->sel = c;
 	drawbars();
 }
-
+H
 /* there are some broken focus acquiring clients needing extra handling */
 void
 focusin(XEvent *e)

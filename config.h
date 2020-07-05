@@ -89,7 +89,7 @@ static const Rule rules[] = {
 	{ "VNC Viewer",     NULL,       NULL,       1 << 7,            0,           0,         0,        -1 },
 	{ "realvnc-vncviewer",     NULL, NULL,      1 << 8,            0,           0,         0,        -1 },
 	{ "copyq",     NULL, NULL,      0,            	1,           0,         0,        -1 },
-
+	{ "vscodium",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
 
 	{ "urxvt",       NULL,    "xxxx",       	0,            0,           1,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
@@ -145,9 +145,14 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-b", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "xfce4-terminal", NULL };
+static const char *termcmd[]  = { "sterminal", NULL };
 static const char *browsercmd[]  = { "firefox-developer-edition", NULL };
 static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
+static const char *instantswitchcmd[] = {"rofi", "-show", "window", "-kb-row-down", "Alt+Tab,Down", "-kb-row-up", "Alt+Ctrl+Tab,Up", "-kb-accept-entry", "!Alt_L,!Alt+Tab,Return", "-me-select-entry", "", "-me-accept-entry", "MousePrimary", NULL};
+
+static const char *playernext[] = {"playerctl", "next", NULL};
+static const char *playerprevious[] = {"playerctl", "previous", NULL};
+static const char *playerpause[] = {"playerctl", "play-pause", NULL};
 
 
 #include <X11/XF86keysym.h>
@@ -187,8 +192,8 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD("urxvt -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
 	//{ MODKEY,			XK_r,		spawn,		SHCMD("urxvt -e lf") },
 	
-	{ MODKEY,		XK_e,		spawn,		SHCMD("thunar") },
-	{ MODKEY,		XK_r,		spawn,		SHCMD("rofi-launch.sh")  },
+	{ MODKEY,		XK_n,		spawn,		SHCMD("nautilus") },
+	
 
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,		XK_t,		setlayout,	{.v = &layouts[1]} }, /* bstack */
@@ -232,18 +237,21 @@ static Key keys[] = {
 	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_Return,	spawn,		SHCMD("urxvt") },
+	{ MODKEY|ShiftMask,		XK_Return,	spawn,		SHCMD("kitty") },
 	
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
-	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
+	{ MODKEY|ShiftMask,	XK_z,		incrgaps,	{.i = -3 } },
+
+	{MODKEY, XK_x, spawn, {.v = instantswitchcmd}},
+
 	/* { MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("") }, */
 	/* { MODKEY,			XK_c,		spawn,		SHCMD("") }, */
 	/* { MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("") }, */
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
-	{ MODKEY,			XK_n,		spawn,		SHCMD("urxvt -e nvim -c VimwikiIndex") },
+	//{ MODKEY,			XK_n,		spawn,		SHCMD("urxvt -e nvim -c VimwikiIndex") },
 	
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[5]} },
 
@@ -261,8 +269,12 @@ static Key keys[] = {
 	*/
 
 
-	{ MODKEY,			XK_comma,	spawn,		SHCMD("transset-df --min 0.1 -p --dec 0.1") },
-	{ MODKEY,			XK_period,	spawn,		SHCMD("transset-df -p --inc 0.1") },
+	{ MODKEY,			XK_period,	spawn,		{.v = playernext} },
+	{ MODKEY|ShiftMask,		XK_period,	spawn,	{.v = playerprevious} },
+	
+
+	{ MODKEY|ShiftMask,	XK_comma,	spawn,		SHCMD("transset-df --min 0.1 -p --dec 0.1") },
+	{ MODKEY,			XK_comma,	spawn,		SHCMD("transset-df -p --inc 0.1") },
 
 	{ MODKEY,			XK_Left,	focusmon,	{.i = -1 } },
 	{ MODKEY|ShiftMask,	XK_Left,	tagmon,		{.i = -1 } },
@@ -288,8 +300,9 @@ static Key keys[] = {
 	{ MODKEY,			XK_F10,		spawn,		SHCMD("dmenuumount") },
 	{ MODKEY,			XK_F11,		spawn,		SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
 	{ MODKEY,			XK_F12,		xrdb,		{.v = NULL } },
-	{ MODKEY,			XK_space,	zoom,		{0} },
-	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
+	{ MODKEY,			XK_r,		zoom,		{0} },
+	{ MODKEY,		    XK_space,		spawn,		SHCMD("rofi-launch.sh")  },
+	{ MODKEY|ShiftMask,	XK_space,	togglefloating,	{0} },
 	
 
 	{ 0,       			XK_Alt_L,   start_alt_tab,  {0} },
@@ -309,6 +322,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
+	/*
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
@@ -316,6 +330,12 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("mpc stop") },
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
+	*/
+
+	{0, XF86XK_AudioPlay, spawn, {.v = playerpause}},
+	{0, XF86XK_AudioNext, spawn, {.v = playernext}},
+	{0, XF86XK_AudioPrev, spawn, {.v = playerprevious}},
+
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("urxvt -e ncmpcpp") },
 	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD("urxvt -e bc -l") },
