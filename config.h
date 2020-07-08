@@ -190,7 +190,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
-	{ MODKEY|ShiftMask,			XK_q,		killclient,	{0} },
+	{ MODKEY ,			XK_q,		killclient,	{0} },
 	{ Mod1Mask,         		XK_F4,      killclient, {0}  },
 
 	//{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
