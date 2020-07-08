@@ -83,13 +83,20 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
 	{ "Navigator",     NULL,       NULL,       	1 << 5,            0,           0,         0,        -1 },
 	{ "firefoxdeveloperedition",     NULL,       NULL,       	1 << 5,            0,           0,         0,        -1 },
+	{ "brave-browser",     NULL,       NULL,       	1 << 6,            0,           0,         0,        -1 },
+	{ "Brave-browser",     NULL,       NULL,       	1 << 6,            0,           0,         0,        -1 },
+
+	{ "jetbrains-idea",     NULL,       NULL,     1 << 7,            0,           0,         0,        -1 },
 	
 	{ "sublime_text",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
 	{ "Sublime_text",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
 	{ "VNC Viewer",     NULL,       NULL,       1 << 7,            0,           0,         0,        -1 },
 	{ "realvnc-vncviewer",     NULL, NULL,      1 << 8,            0,           0,         0,        -1 },
-	{ "copyq",     NULL, NULL,      0,            	1,           0,         0,        -1 },
+	{ "copyq",     NULL, NULL,      0,            	0,           0,         0,        -1 },
+
 	{ "vscodium",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
+	{ "VSCodium",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
+
 
 	{ "urxvt",       NULL,    "xxxx",       	0,            0,           1,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
@@ -145,7 +152,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-b", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "sterminal", NULL };
 static const char *browsercmd[]  = { "firefox-developer-edition", NULL };
 static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
 static const char *instantswitchcmd[] = {"rofi", "-show", "window", "-kb-row-down", "Alt+Tab,Down", "-kb-row-up", "Alt+Ctrl+Tab,Up", "-kb-accept-entry", "!Alt_L,!Alt+Tab,Return", "-me-select-entry", "", "-me-accept-entry", "MousePrimary", NULL};
@@ -183,8 +190,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("sysact") },
 
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
-	{ MODKEY,			XK_q,		killclient,	{0} },
-	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
+	{ MODKEY|ShiftMask,			XK_q,		killclient,	{0} },
+	{ Mod1Mask,         		XK_F4,      killclient, {0}  },
+
+	//{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
 	// { MODKEY,			XK_w,		spawn,		SHCMD("$BROWSER") },
 	{ MODKEY,           XK_w,                    spawn,          {.v = browsercmd } },
 	//{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("urxvt -e sudo nmtui") },
@@ -306,7 +315,7 @@ static Key keys[] = {
 	
 
 	{ 0,       			XK_Alt_L,   start_alt_tab,  {0} },
-	{ MODKEY,  		    XK_Tab,    spawn,    SHCMD("skippy-xd") },
+	 { MODKEY,			XK_Tab,		shiftview,	{ .i = -1 } },
 	// { MODKEY,			XK_Tab,		view,		{0} },
 	{ Mod1Mask,         XK_Tab,    alt_tab,        {0}  },
 
