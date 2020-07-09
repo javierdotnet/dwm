@@ -12,9 +12,9 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 // static const char *fonts[]          = { "Ubuntu:size=10", "ubuntu:pixelsize=10:antialias=true:autohint=true"  };
-static const char *fonts[]          = { "UbuntuMono:size=12","UbuntuMono:size=8:antialias=true" };
+static const char *fonts[]          = { "SFProDisplay-Regular:size=12","UbuntuMono:size=8:antialias=true" };
 //
-static char dmenufont[]       ="UbuntuMono:size=12"; 
+static char dmenufont[]       ="SFProDisplay-Regular:size=12"; 
 //"-*-Ubuntu-r-*-*-16-*-*-*-*-*-*-*";
 
 static const unsigned int transparency = 1;
@@ -73,36 +73,34 @@ static Sp scratchpads[] = {
 // static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ "Navigator",     NULL,       NULL,       	1 << 5,            0,           0,         0,        -1 },
-	{ "firefoxdeveloperedition",     NULL,       NULL,       	1 << 5,            0,           0,         0,        -1 },
-	{ "brave-browser",     NULL,       NULL,       	1 << 6,            0,           0,         0,        -1 },
-	{ "Brave-browser",     NULL,       NULL,       	1 << 6,            0,           0,         0,        -1 },
-
-	{ "jetbrains-idea",     NULL,       NULL,     1 << 7,            0,           0,         0,        -1 },
-	
-	{ "sublime_text",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
-	{ "Sublime_text",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
-	{ "VNC Viewer",     NULL,       NULL,       1 << 7,            0,           0,         0,        -1 },
-	{ "realvnc-vncviewer",     NULL, NULL,      1 << 8,            0,           0,         0,        -1 },
-	{ "copyq",     NULL, NULL,      0,            	0,           0,         0,        -1 },
-
-	{ "vscodium",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
-	{ "VSCodium",     NULL,       NULL,     1 << 3,            0,           0,         0,        -1 },
+	{"Gimp", NULL, NULL, 1 << 8, 0, 0, 0, -1},
+	{"Navigator", NULL, NULL, 1 << 5, 0, 0, 0, -1},
+	{"firefoxdeveloperedition", NULL, NULL, 1 << 5, 0, 0, 0, -1},
+	{"brave-browser", NULL, NULL, 1 << 6, 0, 0, 0, -1},
+	{"Brave-browser", NULL, NULL, 1 << 6, 0, 0, 0, -1},
 
 
-	{ "urxvt",       NULL,    "xxxx",       	0,            0,           1,         0,        -1 },
-	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
-	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
-	{ NULL,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
-	{ NULL,      "Alacritty",    "Alacritty",       	    SPTAG(1),     1,           1,         0,        -1 },
+	{"jetbrains-idea", NULL, NULL, 1 << 7, 0, 0, 0, -1},
+
+	{"sublime_text", NULL, NULL, 1 << 3, 0, 0, 0, -1},
+	{"Sublime_text", NULL, NULL, 1 << 3, 0, 0, 0, -1},
+	{"VNC Viewer", NULL, NULL, 1 << 7, 0, 0, 0, -1},
+	{"realvnc-vncviewer", NULL, NULL, 1 << 8, 0, 0, 0, -1},
+
+	{"vscodium", NULL, NULL, 1 << 3, 0, 0, 0, -1},
+	{"VSCodium", NULL, NULL, 1 << 3, 0, 0, 0, -1},
+
+	{"urxvt", NULL, "xxxx", 0, 0, 1, 0, -1},
+	{NULL, NULL, "Event Tester", 0, 0, 0, 1, -1},
+	{NULL, "spterm", NULL, SPTAG(0), 1, 1, 0, -1},
+	{NULL, "spcalc", NULL, SPTAG(1), 1, 1, 0, -1},
+	{NULL, "Alacritty", "Alacritty", SPTAG(1), 1, 1, 0, -1},
 
 };
 
@@ -327,6 +325,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Print,	spawn,	SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,	SHCMD("killall screenkey || screenkey &") },
+
+	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
+	{ Mod1Mask,            XK_space, cyclelayout,    {.i = +1 } },
 
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },

@@ -111,6 +111,8 @@ typedef struct {
 
 typedef struct Monitor Monitor;
 typedef struct Client Client;
+
+
 struct Client {
 	char name[256];
 	float mina, maxa;
@@ -176,6 +178,7 @@ typedef struct {
 	int monitor;
 } Rule;
 
+
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
@@ -193,6 +196,8 @@ static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static void copyvalidchars(char *text, char *rawtext);
 static Monitor *createmon(void);
+static void cyclelayout(const Arg *arg);
+
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
@@ -2659,4 +2664,20 @@ static Client *get_nth_client(int n)
    // focus and restack the nth window */
    alt_tab_count = (alt_tab_count + 1) % count_visible();
    focus_restack(get_nth_client(alt_tab_count));
+}
+
+void cyclelayout(const Arg *arg) {
+	Layout *l;
+	for(l = (Layout *)layouts; l != selmon->lt[selmon->sellt]; l++);
+	if(arg->i > 0) {
+		if(l->symbol && (l + 1)->symbol)
+			setlayout(&((Arg) { .v = (l + 1) }));
+		else
+			setlayout(&((Arg) { .v = layouts }));
+	} else {
+		if(l != layouts && (l - 1)->symbol)
+			setlayout(&((Arg) { .v = (l - 1) }));
+		else
+			setlayout(&((Arg) { .v = &layouts[LENGTH(layouts) - 2] }));
+	}
 }
