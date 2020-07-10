@@ -663,22 +663,7 @@ clientmessage(XEvent *e)
 	XClientMessageEvent *cme = &e->xclient;
 	Client *c = wintoclient(cme->window);
 	unsigned int i;
-	
-	/*
-	if (!c)
-		return;
-	if (cme->message_type == netatom[NetWMState]) {
-		if (cme->data.l[1] == netatom[NetWMFullscreen]
-		|| cme->data.l[2] == netatom[NetWMFullscreen])
-			setfullscreen(c, (cme->data.l[0] == 1 
-				|| (cme->data.l[0] == 2  && !c->isfullscreen)));
-	} else if (cme->message_type == netatom[NetActiveWindow]) {
-		if (c != selmon->sel && !c->isurgent)
-			seturgent(c, 1);
-	}
-	*/
 
-	
 	if (!c)
  		return;
 
@@ -2033,6 +2018,7 @@ togglefullscr(const Arg *arg)
     setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
 }
 
+
 void
 togglesticky(const Arg *arg)
 {
@@ -2082,6 +2068,8 @@ toggletag(const Arg *arg)
 		arrange(selmon);
 	}
 }
+
+
 
 void
 toggleview(const Arg *arg)
