@@ -80,10 +80,10 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    iscentered  isfloating   isterminal  noswallow  monitor */
 	{"Gimp", NULL, NULL, 1 << 8, 0, 0, 0, 0, -1},
-	{"Navigator", NULL, NULL, 1 << 5, 0,  0, 0, 0, -1},
-	{"firefoxdeveloperedition", NULL, NULL, 1 << 5, 0, 0, 0, 0, -1},
-	{"brave-browser", NULL, NULL, 1 << 6, 1, 0, 0, 0, -1},
-	{"Brave-browser", NULL, NULL, 1 << 6, 1, 0, 0, 0, -1},
+	{"Navigator", NULL, NULL, 1, 0,  0, 0, 0, -1},
+	{"firefoxdeveloperedition", NULL, NULL, 1, 0, 0, 0, 0, -1},
+	{"brave-browser", NULL, NULL, 2, 1, 0, 0, 0, -1},
+	{"Brave-browser", NULL, NULL, 2, 1, 0, 0, 0, -1},
 
 
 	{"jetbrains-idea", NULL, NULL, 1 << 7, 1, 0, 0, 0, -1},
@@ -152,7 +152,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-b", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "sterminal", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 static const char *browsercmd[]  = { "firefox-developer-edition", NULL };
 static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
 static const char *instantswitchcmd[] = {"rofi", "-show", "window", "-kb-row-down", "Alt+Tab,Down", "-kb-row-up", "Alt+Ctrl+Tab,Up", "-kb-accept-entry", "!Alt_L,!Alt+Tab,Return", "-me-select-entry", "", "-me-accept-entry", "MousePrimary", NULL};
@@ -246,7 +246,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_Return,	spawn,		SHCMD("kitty") },
+	{ MODKEY|ShiftMask,	XK_Return,	spawn,		SHCMD("xfce4-terminal") },
 	
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */

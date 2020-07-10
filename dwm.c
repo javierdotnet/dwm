@@ -2660,8 +2660,11 @@ static Client *get_nth_client(int n)
       focus_restack(get_nth_client(alt_tab_count));
 
    // focus and restack the nth window */
-   alt_tab_count = (alt_tab_count + 1) % count_visible();
-   focus_restack(get_nth_client(alt_tab_count));
+   if (count_visible()> 0) 
+	 {  
+  		 alt_tab_count = (alt_tab_count + 1) % count_visible();
+   		focus_restack(get_nth_client(alt_tab_count));
+	 }
 }
 
 void cyclelayout(const Arg *arg) {
