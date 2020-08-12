@@ -78,38 +78,9 @@ static Sp scratchpads[] = {
 // static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	*/
-	/* class    instance      title       	 tags mask    iscentered  isfloating   isterminal  noswallow  monitor */
-	{"Gimp", NULL, NULL, 1 << 8, 0, 0, 0, 0, -1},
-	{"Navigator", NULL, NULL, 1, 0,  0, 0, 0, -1},
-	{"firefoxdeveloperedition", NULL, NULL, 1, 0, 0, 0, 0, -1},
-	{"brave-browser", NULL, NULL, 2, 1, 0, 0, 0, -1},
-	{"Brave-browser", NULL, NULL, 2, 1, 0, 0, 0, -1},
+#include "rules.h"
+#include "maximize.c"
 
-
-	{"jetbrains-idea", NULL, NULL, 1 << 7, 1, 0, 0, 0, -1},
-
-	{"sublime_text", NULL, NULL, 1 << 3, 0, 0, 0, 0, -1},
-	{"Sublime_text", NULL, NULL, 1 << 3, 0, 0, 0, 0, -1},
-	{"VNC Viewer", NULL, NULL, 1 << 7, 1, 0, 0, 0, -1},
-	{"realvnc-vncviewer", NULL, NULL, 1 << 8, 1, 0, 0, 0, -1},
-
-	{"vscodium", NULL, NULL, 1 << 3, 0, 0, 0, 0, -1},
-	{"VSCodium", NULL, NULL, 1 << 3, 0, 0, 0, 0, -1},
-
-	{"urxvt", NULL, "xxxx", 0, 1 , 0, 1, 0, -1},
-	{NULL, NULL, "Event Tester", 0, 0, 0, 0, 1, -1},
-	{NULL, "spterm", NULL, SPTAG(0), 1, 1, 0, -1},
-	{NULL, "spcalc", NULL, SPTAG(1), 1, 1, 0, -1},
-
-	{"copyq", NULL, NULL, 0, 0, 0 , 1, 0, -1},
-
-
-};
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -387,6 +358,12 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } }, */
 	/* { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } }, */
  //
+
+    { MODKEY|ControlMask|ShiftMask, XK_h,           togglehorizontalmax, NULL },
+    { MODKEY|ControlMask|ShiftMask, XK_l,           togglehorizontalmax, NULL },
+    { MODKEY|ControlMask|ShiftMask, XK_j,           toggleverticalmax,   NULL },
+    { MODKEY|ControlMask|ShiftMask, XK_k,           toggleverticalmax,   NULL },
+    { MODKEY|ControlMask,           XK_m,           togglemaximize,      {0} },
 };
 
 /* button definitions */

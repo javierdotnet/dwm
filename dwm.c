@@ -143,7 +143,7 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow, issticky;
-
+    int ismax, wasfloating ;
 	pid_t pid;
 	Client *next;
 	Client *snext;
@@ -1413,6 +1413,8 @@ manage(Window w, XWindowAttributes *wa)
 	}
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
+    c->wasfloating = 0;
+    c->ismax = 0;
 	if (!c->isfloating)
 		c->isfloating = c->oldstate = trans != None || c->isfixed;
 	if (c->isfloating)
