@@ -1840,7 +1840,8 @@ run(void)
 
 void
 runAutostart(void) {
-	system("killall -q dwmblocks; dwmblocks &");
+	// system("killall -q dwmblocks; dwmblocks &");
+    system("cd ~/.dwm; ./autostart.sh &");
 }
 
 void

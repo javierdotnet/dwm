@@ -17,9 +17,10 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 // static const char *fonts[]          = { "Ubuntu:size=10", "ubuntu:pixelsize=10:antialias=true:autohint=true"  };
-static const char *fonts[]          = { "SFProDisplay-Regular:size=13","UbuntuMono:size=10:antialias=true" };
+static const char *fonts[]          = { "SFProDisplay-Regular:size=12", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 //
-static char dmenufont[]       ="SFProDisplay-Regular:size=13"; 
+static char dmenufont[]             = "SFProDisplay-Regular:size=14";
+
 //"-*-Ubuntu-r-*-*-16-*-*-*-*-*-*-*";
 
 static const unsigned int transparency = 1;
@@ -40,6 +41,7 @@ static char *colors[][3] = {
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 
 };
+
 
 
 /*
@@ -129,7 +131,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-b", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
-static const char *browsercmd[]  = { "firefox-developer-edition", NULL };
+static const char *browsercmd[]  = { "brave", NULL };
 static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
 static const char *instantswitchcmd[] = {"rofi", "-show", "window", "-kb-row-down", "Alt+Tab,Down", "-kb-row-up", "Alt+Ctrl+Tab,Up", "-kb-accept-entry", "!Alt_L,!Alt+Tab,Return", "-me-select-entry", "", "-me-accept-entry", "MousePrimary", NULL};
 
@@ -178,9 +180,10 @@ static Key keys[] = {
 	//{ MODKEY,			XK_r,		spawn,		SHCMD("urxvt -e lf") },
 	
 	{ MODKEY,		XK_n,		spawn,		SHCMD("nautilus") },
-	
+    { MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD("sudo -A nautilus") },
 
-	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
+
+    { MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,		XK_t,		setlayout,	{.v = &layouts[1]} }, /* bstack */
 	{ MODKEY,			XK_y,		setlayout,	{.v = &layouts[2]} }, /* spiral */
 	{ MODKEY|ShiftMask,		XK_y,		setlayout,	{.v = &layouts[3]} }, /* dwindle */
@@ -274,9 +277,9 @@ static Key keys[] = {
 
 	{ MODKEY,			XK_F1,		spawn,		SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
 	//{ MODKEY,			XK_F2,		spawn,		SHCMD("tutorialvids") },
-	{ MODKEY,			XK_F2,		spawn,		SHCMD("st -e nmtui")},
+	{ MODKEY,			XK_F2,		spawn,		SHCMD("urxvt -e nmtui")},
 	{ MODKEY,			XK_F3,		spawn,		SHCMD("displayselect") },
-	{ MODKEY,			XK_F4,		spawn,		SHCMD("st -e pulsemixer; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_F4,		spawn,		SHCMD("urxvt -e pulsemixer; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,			XK_F5,		xrdb,		{.v = NULL } },
 	{ MODKEY,			XK_F6,		spawn,		SHCMD("torwrap") },
 	{ MODKEY,			XK_F7,		spawn,		SHCMD("td-toggle") },
@@ -290,9 +293,13 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_space,	togglefloating,	{0} },
 	
 
-	{ 0,       			XK_Alt_L,   start_alt_tab,  {0} },
+	//{ 0,       			XK_Alt_L,   start_alt_tab,  {0} },
+	
 	 { MODKEY,			XK_Tab,		shiftview,	{ .i = -1 } },
+	
+
 	// { MODKEY,			XK_Tab,		view,		{0} },
+	
 	{ Mod1Mask,         XK_Tab,    alt_tab,        {0}  },
 
 	//{ 0,				XK_Print,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },
