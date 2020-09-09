@@ -292,7 +292,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_F12,		xrdb,		{.v = NULL } },
 	{ MODKEY,			XK_r,		zoom,		{0} },
 	{ MODKEY,			XK_r,		zoom,		{0} },
-	{ MODKEY|ShiftMask,		    XK_space,		spawn,		SHCMD("rofi-launch.sh")  },
+	{ MODKEY,		    XK_space,	spawn,		SHCMD("rofi-launch.sh")  },
 	{ MODKEY|ShiftMask,	XK_space,	togglefloating,	{0} },
 	
 
