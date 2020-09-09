@@ -225,7 +225,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY|ShiftMask,	XK_Return,	spawn,		SHCMD("xfce4-terminal") },
+	{ MODKEY|ShiftMask,	XK_Return,	spawn,		SHCMD("urxvt -e ranger")},
 	
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
@@ -281,7 +281,9 @@ static Key keys[] = {
 	{ MODKEY,			XK_F3,		spawn,		SHCMD("displayselect") },
 	{ MODKEY,			XK_F4,		spawn,		SHCMD("urxvt -e pulsemixer; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,			XK_F5,		xrdb,		{.v = NULL } },
-	{ MODKEY,			XK_F6,		spawn,		SHCMD("torwrap") },
+	//{ MODKEY,			XK_F6,		spawn,		SHCMD("torwrap") },
+	{ MODKEY,			XK_F6,		spawn,		SHCMD("portatil_monitor.sh") },
+	{ MODKEY|ShiftMask,	XK_F6,		spawn,		SHCMD("dual_monitor.sh") },
 	{ MODKEY,			XK_F7,		spawn,		SHCMD("td-toggle") },
 	{ MODKEY,			XK_F8,		spawn,		SHCMD("mailsync") },
 	{ MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },
@@ -289,7 +291,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_F11,		spawn,		SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
 	{ MODKEY,			XK_F12,		xrdb,		{.v = NULL } },
 	{ MODKEY,			XK_r,		zoom,		{0} },
-	{ MODKEY,		    XK_space,		spawn,		SHCMD("rofi-launch.sh")  },
+	{ MODKEY,			XK_r,		zoom,		{0} },
+	{ MODKEY|ShiftMask,		    XK_space,		spawn,		SHCMD("rofi-launch.sh")  },
 	{ MODKEY|ShiftMask,	XK_space,	togglefloating,	{0} },
 	
 
