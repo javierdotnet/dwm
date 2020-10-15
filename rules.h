@@ -12,12 +12,14 @@ static const Rule rules[] = {
         */
         /* class    instance      title       	 tags mask    iscentered  isfloating   isterminal  noswallow  monitor */
         {"Gimp", NULL, NULL, 1 << 8, 0, 0, 0, 0, -1},
-        {"Navigator", NULL, NULL, 1, 0,  0, 0, 0, -1},
+       
 
         {"joplin", NULL, NULL, 1 << 2, 0, 0, 0, 0, -1},
         {"Joplin", NULL, NULL, 1 << 2, 0, 0, 0, 0, -1},
 
-        {"firefoxdeveloperedition", NULL, NULL, 1, 0, 0, 0, 0, -1},
+        {"firefoxdeveloperedition", NULL, NULL, 2, 0, 0, 0, 0, -1},
+        {"Navigator", NULL, NULL, 2, 0,  0, 0, 0, -1},
+
         {"brave-browser", NULL, NULL, 2, 1, 0, 0, 0, -1},
         {"Brave-browser", NULL, NULL, 2, 1, 0, 0, 0, -1},
 
@@ -44,7 +46,7 @@ static const Rule rules[] = {
         {NULL, "spterm", NULL, SPTAG(0), 1, 1, 0, -1},
         {NULL, "spcalc", NULL, SPTAG(1), 1, 1, 0, -1},
 
-        {"copyq", NULL, NULL, 0, 0, 0 , 0, 0, -1},
+        {"copyq", NULL, NULL, 0, 1, 1 , 0, 0, -1},
 
         {"orage", NULL, NULL, 1, 1, 0, 0, -1},
         {"Orage", NULL, NULL, 1, 1, 0, 0, -1},
