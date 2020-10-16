@@ -16,9 +16,9 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 24;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 20;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 // static const char *fonts[]          = { "Ubuntu:size=10", "ubuntu:pixelsize=10:antialias=true:autohint=true"  };
-static const char *fonts[]          = { "SFProDisplay-Regular:size=14", "JoyPixels:pixelsize=12:antialias=true:autohint=true"  };
+static const char *fonts[]          = { "SFProDisplay-Regular:size=13", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 //
 static char dmenufont[]             = "SFProDisplay-Regular:size=14";
 
@@ -28,6 +28,13 @@ static const unsigned int transparency = 1;
 
 static const char *rootmenu[] = { "/home/javier/.local/bin/rootmenu.sh", NULL };
 
+/* launcher commands (They must be NULL terminated) */
+static const char* surf[]      = { "surf", "duckduckgo.com", NULL };
+
+static const Launcher launchers[] = {
+       /* command       name to display */
+	{ surf,         "surf" },
+};
 
 static char normbordercolor[] = "#116747";
 static char normbgcolor[]     = "#040404";
@@ -45,8 +52,8 @@ static char *colors[][3] = {
 	[SchemeStatus]  = { selfgcolor, normbgcolor,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { normfgcolor, normbordercolor,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]  = { selbordercolor, normbgcolor,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]  = { selfgcolor ,normbgcolor,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]  = { selbordercolor, selbgcolor ,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]  = { selfgcolor ,"#1D2A30",  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]  = { selbordercolor, normbgcolor ,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 
 
 };
@@ -102,7 +109,7 @@ static Sp scratchpads[] = {
 // static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9","10","11","12","13" };
 // static const char *tags[] = { "1:web", "2:term", "3:dev", "4:misc" };
 // static const char *tags[] = { "main", "web", "mail", "docs", "media", "rss", "social", "code", "misc" };
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6:", "7:", "8:", "9:" };
 
 #include "rules.h"
 #include "maximize.c"
