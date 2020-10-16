@@ -12,7 +12,7 @@ static const Rule rules[] = {
         */
         /* class    instance      title       	 tags mask    iscentered  isfloating   isterminal  noswallow  monitor */
         {"Gimp", NULL, NULL, 1 << 8, 0, 0, 0, 0, -1},
-       
+        {"Glimpse", NULL, NULL, 1 << 8, 0, 0, 0, 0, -1},
 
         {"joplin", NULL, NULL, 1 << 2, 0, 0, 0, 0, -1},
         {"Joplin", NULL, NULL, 1 << 2, 0, 0, 0, 0, -1},
