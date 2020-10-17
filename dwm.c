@@ -1038,6 +1038,7 @@ drawbar(Monitor *m)
 			urg |= c->tags;
 	}
 	x = 0;
+
 	for (i = 0; i < LENGTH(tags); i++) {
 		/* do not draw vacant tags */
 		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
@@ -1049,9 +1050,11 @@ drawbar(Monitor *m)
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		x += w;
 	}
+
 	w = blw = TEXTW(m->ltsymbol);
-	//drw_setscheme(drw, scheme[SchemeNorm]);
-	drw_setscheme(drw, scheme[SchemeTagsNorm]);
+	
+	drw_setscheme(drw, scheme[SchemeTagsNorm]); //drw_setscheme(drw, scheme[SchemeNorm]);
+	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 	
 	for (i = 0; i < LENGTH(launchers); i++)
 	{
@@ -1059,8 +1062,8 @@ drawbar(Monitor *m)
 		drw_text(drw, x, 0, w, bh, lrpad / 2, launchers[i].name, urg & 1 << i);
 		x += w;
 	}
-
-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+	
+	
 	
 	if ((w = m->ww - tw - stw - x) > bh) {
 		if (m->sel) {
@@ -1890,6 +1893,7 @@ void
 runAutostart(void) {
 	// system("killall -q dwmblocks; dwmblocks &");
     system("cd ~/.dwm; ./autostart.sh &");
+	togglegaps(0);
 }
 
 void

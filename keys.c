@@ -26,7 +26,11 @@ static Key keys[] = {
 
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY ,			XK_q,		killclient,	{0} },
+	{ MODKEY|ShiftMask ,XK_q,		spawn,	SHCMD("xkill") },
 	{ Mod1Mask,         		XK_F4,      killclient, {0}  },
+
+
+	{ MODKEY ,		XK_Escape,	spawn,      {.v = rootmenu } },
 
 	//{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("sysact") },
 	// { MODKEY,			XK_w,		spawn,		SHCMD("$BROWSER") },
@@ -74,15 +78,18 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
 	{ MODKEY,			XK_g,		shiftview,	{ .i = -1 } },
 	{ MODKEY|ShiftMask,		XK_g,		shifttag,	{ .i = -1 } },
-	{ MODKEY,			XK_h,		setmfact,	{.f = -0.05} },
 	/* J and K are automatically bound above in STACKEYS */
+	{ MODKEY,			XK_h,		setmfact,	{.f = -0.05} },
 	{ MODKEY,			XK_l,		setmfact,      	{.f = +0.05} },
+	
+
 	{ MODKEY,			XK_semicolon,	shiftview,	{ .i = 1 } },
 	{ MODKEY|ShiftMask,		XK_semicolon,	shifttag,	{ .i = 1 } },
 	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} },
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY|ShiftMask,	XK_Return,	spawn,		SHCMD("urxvt -e ranger")},
+	{ MODKEY|ShiftMask,	XK_Return,	spawn,		{.v = floattermcmd } },
+	//SHCMD("urxvt -e ranger")},
 	
 	{ MODKEY,			XK_z,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
@@ -151,13 +158,13 @@ static Key keys[] = {
 	{ MODKEY,			XK_F12,		xrdb,		{.v = NULL } },
 	{ MODKEY,			XK_r,		zoom,		{0} },
 	{ MODKEY,			XK_r,		zoom,		{0} },
-	{ MODKEY2,		    XK_space,	spawn,		SHCMD("rofi-launch.sh")  },
+	{ MODKEY,		    XK_space,	spawn,		SHCMD("rofi-launch.sh")  },
 	{ MODKEY|ShiftMask,	XK_space,	togglefloating,	{0} },
 	
 
 	//{ 0,       			XK_Alt_L,   start_alt_tab,  {0} },
 	
-	 { MODKEY2,			XK_Tab,		shiftview,	{ .i = -1 } },
+	 { MODKEY  ,			XK_Tab,		shiftview,	{ .i = -1 } },
 	
 
 	// { MODKEY,			XK_Tab,		view,		{0} },
@@ -233,31 +240,4 @@ static Key keys[] = {
     { MODKEY|ControlMask|ShiftMask, XK_j,           toggleverticalmax,   NULL },
     { MODKEY|ControlMask|ShiftMask, XK_k,           toggleverticalmax,   NULL },
     { MODKEY|ControlMask,           XK_m,           togglemaximize,      {0} },
-};
-
-/* button definitions */
-/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
-	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
-	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
-	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
-	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
-	{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
-	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD("urxvt -e nvim ~/.local/src/dwmblocks/config.h") },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        defaultgaps,	{0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkClientWin,		MODKEY,		Button4,	incrgaps,	{.i = +1} },
-	{ ClkClientWin,		MODKEY,		Button5,	incrgaps,	{.i = -1} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkTagBar,		0,		Button4,	shiftview,	{.i = -1} },
-	{ ClkTagBar,		0,		Button5,	shiftview,	{.i = 1} },
-	{ ClkRootWin,		0,		Button2,	togglebar,	{0} },
-	{ ClkRootWin,    0,    Button3,     spawn,      {.v = rootmenu } },
 };

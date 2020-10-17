@@ -26,15 +26,6 @@ static char dmenufont[]             = "SFProDisplay-Regular:size=14";
 
 static const unsigned int transparency = 1;
 
-static const char *rootmenu[] = { "/home/javier/.local/bin/rootmenu.sh", NULL };
-
-/* launcher commands (They must be NULL terminated) */
-static const char* surf[]      = { "surf", "duckduckgo.com", NULL };
-
-static const Launcher launchers[] = {
-       /* command       name to display */
-	{ surf,         "surf" },
-};
 
 static char normbordercolor[] = "#116747";
 static char normbgcolor[]     = "#040404";
@@ -91,13 +82,47 @@ static const char *colors[][3]      = {
 
 */
 
+/* commands */
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = { "dmenu_run","-b", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]  = { "kitty", NULL };
+static const char *browsercmd[]  = { "firefox-developer-edition", NULL };
+static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
+static const char *instantswitchcmd[] = {"rofi", "-show", "window", "-kb-row-down", "Alt+Tab,Down", "-kb-row-up", "Alt+Ctrl+Tab,Up", "-kb-accept-entry", "!Alt_L,!Alt+Tab,Return", "-me-select-entry", "", "-me-accept-entry", "MousePrimary", NULL};
+
+
+static const char *rootmenu[] = { "/home/javier/.local/bin/rootmenu.sh", NULL };
+
+/* launcher commands (They must be NULL terminated) */
+static const char* surf[]      = { "surf", "duckduckgo.com", NULL };
+static const char* firefox[]      = { "firefox-developer-edition", "duckduckgo.com", NULL };
+static const char* chromium[]      = { "chromium", "duckduckgo.com", NULL };
+static const char* kittyterm[]      = { "kitty", NULL, NULL };
+static const char* xkill[]   = { "/usr/bin/xkill", NULL };
+static const char* nautilus[]      = { "nautilus", "/home/javier", NULL };
+
+static const char *playernext[] = {"playerctl", "next", NULL};
+static const char *playerprevious[] = {"playerctl", "previous", NULL};
+static const char *playerpause[] = {"playerctl", "play-pause", NULL};
+
+static const Launcher launchers[] = {
+       /* command       name to display */
+	{ chromium,    "" },
+	{ firefox,     "" },
+	{ kittyterm ,  "﮸"},
+	{ xkill ,   ""},
+	{ nautilus ,   ""}
+};
+
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd2[] = {"st", "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+static const char *floattermcmd[]   = { "st", "-c", "floating", "-g", "120x34", "-f", "monospace:size=16", NULL };
 
 typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"urxvt", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"urxvt", "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -105,11 +130,11 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-// static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 // static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9","10","11","12","13" };
 // static const char *tags[] = { "1:web", "2:term", "3:dev", "4:misc" };
 // static const char *tags[] = { "main", "web", "mail", "docs", "media", "rss", "social", "code", "misc" };
-static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6:", "7:", "8:", "9:" };
+// static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6:", "7:", "8:", "9:" };
 
 #include "rules.h"
 #include "maximize.c"
@@ -139,9 +164,14 @@ static const Layout layouts[] = {
 	{ NULL,		NULL },
 };
 
-/* key definitions */
-#define MODKEY Mod1Mask
-#define MODKEY2 Mod4Mask
+/* 
+	key definitions 
+	Mod4Mask windows key
+	Mod1Mask alt key
+*/
+#define MODKEY Mod4Mask
+#define MODKEY2 Mod1Mask
+
 
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -160,19 +190,10 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-/* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run","-b", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "kitty", NULL };
-static const char *browsercmd[]  = { "firefox-developer-edition", NULL };
-static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
-static const char *instantswitchcmd[] = {"rofi", "-show", "window", "-kb-row-down", "Alt+Tab,Down", "-kb-row-up", "Alt+Ctrl+Tab,Up", "-kb-accept-entry", "!Alt_L,!Alt+Tab,Return", "-me-select-entry", "", "-me-accept-entry", "MousePrimary", NULL};
 
-static const char *playernext[] = {"playerctl", "next", NULL};
-static const char *playerprevious[] = {"playerctl", "previous", NULL};
-static const char *playerpause[] = {"playerctl", "play-pause", NULL};
 
 
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
-#include "keysButtons.c"
+#include "keys.c"
+#include "buttons.c"
