@@ -1,8 +1,8 @@
-
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
+
 	/* { MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("") }, */
 	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
@@ -81,6 +81,8 @@ static Key keys[] = {
 	/* J and K are automatically bound above in STACKEYS */
 	{ MODKEY,			XK_h,		setmfact,	{.f = -0.05} },
 	{ MODKEY,			XK_l,		setmfact,      	{.f = +0.05} },
+
+	{ MODKEY|ShiftMask,	XK_l,		spawn,          {.v = betterlockscreen } },
 	
 
 	{ MODKEY,			XK_semicolon,	shiftview,	{ .i = 1 } },
@@ -130,10 +132,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_comma,	spawn,		SHCMD("transset-df --min 0.1 -p --dec 0.1") },
 	{ MODKEY,			XK_comma,	spawn,		SHCMD("transset-df -p --inc 0.1") },
 
-	{ MODKEY,			XK_Left,	focusmon,	{.i = -1 } },
-	{ MODKEY|ShiftMask,	XK_Left,	tagmon,		{.i = -1 } },
-	{ MODKEY,			XK_Right,	focusmon,	{.i = +1 } },
-	{ MODKEY|ShiftMask,	XK_Right,	tagmon,		{.i = +1 } },
+	{ MODKEY2,			XK_Left,	focusmon,	{.i = -1 } },
+	{ MODKEY2|ShiftMask,	XK_Left,	tagmon,		{.i = -1 } },
+	{ MODKEY2,			XK_Right,	focusmon,	{.i = +1 } },
+	{ MODKEY2|ShiftMask,	XK_Right,	tagmon,		{.i = +1 } },
 
 	{ MODKEY,			XK_Page_Up,	shiftview,	{ .i = -1 } },
 	{ MODKEY|ShiftMask,	XK_Page_Up,	shifttag,	{ .i = -1 } },
@@ -224,7 +226,7 @@ static Key keys[] = {
 	/* { MODKEY|Mod4Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } }, */
 	/* { MODKEY|Mod4Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } }, */
-	/* { MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} }, */
+	/* { MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,   SSS {0} }, */
 	/* { MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } }, */
 	/* { MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } }, */
 	/* { MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } }, */
@@ -235,9 +237,31 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } }, */
  //
 
-    { MODKEY|ControlMask|ShiftMask, XK_h,           togglehorizontalmax, NULL },
-    { MODKEY|ControlMask|ShiftMask, XK_l,           togglehorizontalmax, NULL },
-    { MODKEY|ControlMask|ShiftMask, XK_j,           toggleverticalmax,   NULL },
-    { MODKEY|ControlMask|ShiftMask, XK_k,           toggleverticalmax,   NULL },
-    { MODKEY|ControlMask,           XK_m,           togglemaximize,      {0} },
+    { MODKEY2|ControlMask|ShiftMask, XK_h,           togglehorizontalmax, NULL },
+    { MODKEY2|ControlMask|ShiftMask, XK_l,           togglehorizontalmax, NULL },
+    { MODKEY2|ControlMask|ShiftMask, XK_j,           toggleverticalmax,   NULL },
+    { MODKEY2|ControlMask|ShiftMask, XK_k,           toggleverticalmax,   NULL },
+    { MODKEY2|ControlMask,           XK_m,           togglemaximize,      {0} },
+
+
+
+
+	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
+	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
+	{ MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
+	{ MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
+	{ MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
+	{ MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
+	{ MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
+	{ MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
+	{ MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
+	{ MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
+
+
 };

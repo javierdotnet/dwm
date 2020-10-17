@@ -89,7 +89,7 @@ static const char *termcmd[]  = { "kitty", NULL };
 static const char *browsercmd[]  = { "firefox-developer-edition", NULL };
 static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
 static const char *instantswitchcmd[] = {"rofi", "-show", "window", "-kb-row-down", "Alt+Tab,Down", "-kb-row-up", "Alt+Ctrl+Tab,Up", "-kb-accept-entry", "!Alt_L,!Alt+Tab,Return", "-me-select-entry", "", "-me-accept-entry", "MousePrimary", NULL};
-
+static const char *betterlockscreen[]  = { "betterlockscreen.sh", NULL };
 
 static const char *rootmenu[] = { "/home/javier/.local/bin/rootmenu.sh", NULL };
 
@@ -136,8 +136,6 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 // static const char *tags[] = { "main", "web", "mail", "docs", "media", "rss", "social", "code", "misc" };
 // static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6:", "7:", "8:", "9:" };
 
-#include "rules.h"
-#include "maximize.c"
 
 
 /* layout(s) */
@@ -192,7 +190,8 @@ static const Layout layouts[] = {
 
 
 
-
+#include "rules.h"
+#include "maximize.c"
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
 #include "keys.c"
