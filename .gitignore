@@ -7,3 +7,6 @@ util.o
 dwm
 dwm.o
 drw.o
+dwm.1
+.vscode/
+.idea/
