@@ -1,4 +1,6 @@
-# Luke's build of dwm
+# javierdotnet -> Luke's build of dwm
+
+## I use a lot of patches . I don't remember how many
 
 ## FAQ
 
